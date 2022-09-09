@@ -6,7 +6,7 @@
     <main>
       <div class="title">Movies</div>
       <div class="container">
-        <Product
+        <ProductList
           v-for="(element, index) in moviesArr"
           :key="index"
           :product="element"
