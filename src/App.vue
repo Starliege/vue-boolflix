@@ -1,28 +1,117 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <SearchList @research="getResearch" />
+    </header>
+    <main>
+      <div class="title">Movies</div>
+      <div class="container">
+        <Product
+          v-for="(element, index) in moviesArr"
+          :key="index"
+          :product="element"
+        />
+      </div>
+
+      <div class="title">Series</div>
+      <div class="container">
+        <ProductList
+          v-for="(element, index) in seriesArr"
+          :key="index"
+          :product="element"
+        />
+      </div>
+    </main>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios";
+import SearchList from "./components/SearchList.vue";
+import ProductList from "./components/ProductList.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: "App",
+    data() {
+        return {
+            apiURLmovies: "https://api.themoviedb.org/3/search/movie",
+            apiURLseries: "https://api.themoviedb.org/3/search/tv",
+            moviesArr: [],
+            seriesArr: [],
+            searchQuery: "",
+        };
+    },
+    methods: {
+        getMovies() {
+            axios
+                .get(this.apiURLmovies, {
+                params: {
+                    api_key: "09e726836588fda16d1e69b5fd89e7d7",
+                    query: this.searchQuery,
+                },
+            })
+                .then((response) => {
+                this.moviesArr = response.data.results;
+                console.log(this.moviesArr);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        },
+        getSeries() {
+            axios
+                .get(this.apiURLseries, {
+                params: {
+                    api_key: "09e726836588fda16d1e69b5fd89e7d7",
+                    query: this.searchQuery,
+                },
+            })
+                .then((response) => {
+                this.seriesArr = response.data.results;
+                console.log(this.seriesArr);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
+        },
+        getResearch(inputSearch) {
+            this.searchQuery = inputSearch;
+            this.getMovies();
+            this.getSeries();
+        },
+    },
+    components: { SearchList, ProductList }
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import "./assets/style/global.scss";
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 25px 15px;
+  background: #000;
+
+}
+
+main {
+  padding: 50px 100px;
+  min-height: calc(100vh);
+  background: #191919;
+
+  .title {
+    margin: 0 100px 50px 50px;
+    font-size: 3rem;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin: auto auto 100px auto;
+    width: 85%;
+  }
 }
 </style>
