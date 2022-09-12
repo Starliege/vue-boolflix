@@ -12,6 +12,15 @@
             <strong>Lingua:</strong> {{ product.original_language }}
           </li>
           <li>
+          <img
+            :src="
+              require(`../assets/img/flags/${product.original_language}.svg`)
+            "
+            :alt="product.original_language"
+            class="lang"
+          />
+        </li>
+          <li>
             <strong>Voto:</strong> {{ product.vote_average }}
           </li>
         </ul>
