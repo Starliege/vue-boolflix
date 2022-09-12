@@ -38,6 +38,9 @@
             class="fas fa-star rating-star"
           ></i>
           </li>
+          <li>
+            {{ product.overview }}
+          </li>
         </ul>
       </div>
     </div>
@@ -81,6 +84,7 @@
     padding: 5px 15px;
     background: #000;
     transition: opacity 0.3s;
+    overflow-y: scroll;
 
     &:hover {
       opacity: 1;
