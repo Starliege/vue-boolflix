@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <header>
+      <a href="#" class="logo"
+        ><img src="./assets/img/boolflix.png" alt="Boolflix"
+      /></a>
       <SearchList @research="getResearch" />
     </header>
     <main>
@@ -89,11 +92,20 @@ export default {
 
 header {
   display: flex;
-  justify-content: space-around;
   align-items: center;
   padding: 25px 15px;
   background: #000;
+  justify-content: space-around;
 
+  & > .logo {
+    font-size: 2rem;
+    height: 40px;
+  }
+    img {
+      height: 40px;
+    }
+
+  
 }
 
 main {
